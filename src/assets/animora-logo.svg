@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!--
+    ANIMORA — 3D Faceted Diamond Mark
+    Inspired by Cursor's polyhedron approach:
+    multiple flat polygon faces, different purple shades
+    create a convincing 3D floating gem illusion.
+    
+    The shape is a diamond/rhombus (the animation keyframe symbol)
+    rendered as a 3D gem with 4 visible faces:
+      Top-Left  face  = lightest (catches top light)
+      Top-Right face  = medium
+      Bot-Left  face  = dark
+      Bot-Right face  = darkest (in shadow)
+    
+    Vertices:
+      Top    = (100, 22)
+      Left   = (36, 94)
+      Right  = (164, 94)
+      Bottom = (100, 178)
+      Center = (100, 106)  ← the inner meeting point of all 4 faces
+  -->
+
+  <!-- Top-Left face — lightest, catches imaginary top-left light -->
+  <polygon
+    points="100,22 36,94 100,106"
+    fill="#C4B5FD"/>
+
+  <!-- Top-Right face — medium tone -->
+  <polygon
+    points="100,22 164,94 100,106"
+    fill="#7C3AED"/>
+
+  <!-- Bottom-Left face — dark -->
+  <polygon
+    points="36,94 100,178 100,106"
+    fill="#5B21B6"/>
+
+  <!-- Bottom-Right face — deepest shadow -->
+  <polygon
+    points="164,94 100,178 100,106"
+    fill="#2E1065"/>
+
+</svg>

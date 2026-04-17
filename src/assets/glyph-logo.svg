@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Background circle -->
+  <circle cx="100" cy="100" r="100" fill="#0A0A0F"/>
+
+  <!-- G arc — large partial circle, opens to the right -->
+  <path d="M 100 38
+             A 62 62 0 1 0 162 100
+             L 140 100"
+        fill="none"
+        stroke="#6D28D9"
+        stroke-width="14"
+        stroke-linecap="round"/>
+
+  <!-- Horizontal crossbar of the G -->
+  <line x1="140" y1="100" x2="108" y2="100"
+        stroke="#6D28D9"
+        stroke-width="14"
+        stroke-linecap="round"/>
+
+  <!-- Accent dot — top right of the G opening -->
+  <circle cx="155" cy="56" r="10" fill="#A855F7"/>
+</svg>
