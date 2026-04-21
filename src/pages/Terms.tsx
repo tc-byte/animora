@@ -1,7 +1,7 @@
 import { LegalPage, LegalSection } from "@/components/LegalPage";
 
 const TermsPage = () => (
-  <LegalPage title="Animora — Terms of Service" lastUpdated="June 2025">
+  <LegalPage title="Terms of Service" lastUpdated="April 2026">
     <LegalSection number="1" title="Acceptance">
       <p>By using Animora you agree to these Terms. If you disagree, do not use the Service.</p>
     </LegalSection>

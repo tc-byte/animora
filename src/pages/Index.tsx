@@ -1,22 +1,104 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Link } from "react-router-dom";
 import { WaitlistForm } from "@/components/WaitlistForm";
-import { ImageShowcase, Reveal3D, Card3D } from "@/components/ScrollAnimations";
+import { Reveal3D, Card3D } from "@/components/ScrollAnimations";
 import { useWaitlistCount } from "@/hooks/useWaitlistCount";
 import { useState, useRef } from "react";
 import heroSculpture from "@/assets/hero-sculpture.png";
 import hero3dCharacter from "@/assets/hero-3d-character.jpg";
-import featureModeling from "@/assets/feature-modeling.png";
-import featureRigging from "@/assets/feature-rigging.png";
-import featureSimulation from "@/assets/feature-simulation.png";
-import featureMaterials from "@/assets/feature-materials.png";
 
-const slides = [
-  { img: featureModeling, label: "01", title: "Modeling &\nSculpting", desc: "From low-poly game props to film-quality meshes — just describe what you want." },
-  { img: featureRigging, label: "02", title: "Rigging &\nAnimation", desc: "Auto-rig any character. The 12 principles of animation applied automatically." },
-  { img: featureSimulation, label: "03", title: "Simulation\n& VFX", desc: "Cloth, fluid, fire, smoke — configured by plain language, powered by real physics." },
-  { img: featureMaterials, label: "04", title: "Materials &\nShaders", desc: "AI builds full shader node trees. Procedural, PBR-ready, no textures needed." },
-];
+/* ── Clean SVG Icons ── */
+const IconPenTool = () => (
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12 19l7-7 3 3-7 7-3-3z" />
+    <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" />
+    <path d="M2 2l7.586 7.586" />
+    <circle cx="11" cy="11" r="2" />
+  </svg>
+);
+
+const IconCpu = () => (
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="4" y="4" width="16" height="16" rx="2" />
+    <rect x="9" y="9" width="6" height="6" />
+    <path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3" />
+  </svg>
+);
+
+const IconExport = () => (
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M21 3L14 10" />
+    <path d="M21 3h-6M21 3v6" />
+    <path d="M21 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6" />
+  </svg>
+);
+
+const IconCube = () => (
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+    <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+    <line x1="12" y1="22.08" x2="12" y2="12" />
+  </svg>
+);
+
+const IconFilm = () => (
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18" />
+    <line x1="7" y1="2" x2="7" y2="22" />
+    <line x1="17" y1="2" x2="17" y2="22" />
+    <line x1="2" y1="12" x2="22" y2="12" />
+    <line x1="2" y1="7" x2="7" y2="7" />
+    <line x1="2" y1="17" x2="7" y2="17" />
+    <line x1="17" y1="17" x2="22" y2="17" />
+    <line x1="17" y1="7" x2="22" y2="7" />
+  </svg>
+);
+
+const IconWaves = () => (
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" />
+    <path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" />
+    <path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" />
+  </svg>
+);
+
+const IconPalette = () => (
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="13.5" cy="6.5" r=".5" fill="currentColor" />
+    <circle cx="17.5" cy="10.5" r=".5" fill="currentColor" />
+    <circle cx="8.5" cy="7.5" r=".5" fill="currentColor" />
+    <circle cx="6.5" cy="12.5" r=".5" fill="currentColor" />
+    <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z" />
+  </svg>
+);
+
+const IconMessage = () => (
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+  </svg>
+);
+
+const IconEye = () => (
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+    <circle cx="12" cy="12" r="3" />
+  </svg>
+);
+
+const IconZap = () => (
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+  </svg>
+);
+
+const IconRefresh = () => (
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="23 4 23 10 17 10" />
+    <polyline points="1 20 1 14 7 14" />
+    <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+  </svg>
+);
+
 
 const faqs = [
   { q: "Do I need 3D experience to use Animora?", a: "No. If you can describe what you want, Animora's AI will build it — like having an expert Blender artist at your side." },
@@ -30,7 +112,6 @@ const faqs = [
 
 const Index = () => {
   const count = useWaitlistCount();
-  const [isAnnual, setIsAnnual] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
@@ -112,12 +193,12 @@ const Index = () => {
           </Reveal3D>
           <div className="grid md:grid-cols-3 gap-4 mt-14">
             {[
-              { icon: "🎨", title: "Full Blender Power", desc: "Every tool, modifier, and node — accessible through natural language." },
-              { icon: "🤖", title: "AI Does The Work", desc: "The AI operates Blender like a pro artist. You direct, it executes." },
-              { icon: "🚀", title: "Export Anywhere", desc: "Export to Unreal Engine, Unity, Godot, or any standard 3D format." },
+              { icon: <IconPenTool />, title: "Full Blender Power", desc: "Every tool, modifier, and node — accessible through natural language." },
+              { icon: <IconCpu />, title: "AI Does The Work", desc: "The AI operates Blender like a pro artist. You direct, it executes." },
+              { icon: <IconExport />, title: "Export Anywhere", desc: "Export to Unreal Engine, Unity, Godot, or any standard 3D format." },
             ].map((item, i) => (
               <Card3D key={i} index={i} className="card-elevated p-7 text-center group">
-                <span className="block text-3xl mb-3">{item.icon}</span>
+                <span className="block mb-3 text-primary/70 group-hover:text-primary transition-colors">{item.icon}</span>
                 <h3 className="heading-section text-sm text-foreground mb-2 group-hover:text-primary transition-colors">{item.title}</h3>
                 <p className="text-xs text-white/35 font-body">{item.desc}</p>
               </Card3D>
@@ -126,11 +207,40 @@ const Index = () => {
         </div>
       </section>
 
-      {/* CAPABILITIES */}
-      <ImageShowcase slides={slides} />
+      {/* CAPABILITIES PREVIEW — Links to /features */}
+      <section className="py-24 px-6 ambient-glow noise-overlay">
+        <div className="max-w-[1100px] mx-auto relative z-10">
+          <Reveal3D className="text-center mb-16">
+            <span className="text-overline mb-4 block">Capabilities</span>
+            <h2 className="heading-display text-4xl md:text-[56px] text-foreground italic leading-[0.92]">Everything you need.</h2>
+            <p className="mt-4 text-body text-lg max-w-[520px] mx-auto">Modeling, rigging, animation, simulation, materials, lighting — the full pipeline.</p>
+          </Reveal3D>
+          <div className="grid md:grid-cols-4 gap-4">
+            {[
+              { n: "01", t: "Modeling", d: "AI-driven mesh creation with proper topology.", icon: <IconCube /> },
+              { n: "02", t: "Animation", d: "Auto-rigging and keyframe generation.", icon: <IconFilm /> },
+              { n: "03", t: "Simulation", d: "Cloth, fluid, fire — real physics.", icon: <IconWaves /> },
+              { n: "04", t: "Materials", d: "Full shader node trees, PBR-ready.", icon: <IconPalette /> },
+            ].map((s, i) => (
+              <Card3D key={i} index={i} className="card-elevated p-7 text-center group">
+                <span className="block mb-3 text-primary/70 group-hover:text-primary transition-colors">{s.icon}</span>
+                <span className="block text-4xl font-display italic text-primary/25 mb-3">{s.n}</span>
+                <h3 className="heading-section text-sm text-foreground mb-2 group-hover:text-primary transition-colors">{s.t}</h3>
+                <p className="text-xs text-white/35 font-body">{s.d}</p>
+              </Card3D>
+            ))}
+          </div>
+          <div className="text-center mt-12">
+            <Link to="/features" className="btn-secondary text-sm px-8 py-3.5 inline-flex items-center gap-2">
+              Explore All Features
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+            </Link>
+          </div>
+        </div>
+      </section>
 
       {/* HOW IT WORKS */}
-      <section className="py-24 px-6 ambient-glow noise-overlay">
+      <section className="py-24 px-6">
         <div className="max-w-[1100px] mx-auto relative z-10">
           <Reveal3D className="text-center mb-16">
             <span className="text-overline mb-4 block">How It Works</span>
@@ -138,13 +248,13 @@ const Index = () => {
           </Reveal3D>
           <div className="grid md:grid-cols-4 gap-4">
             {[
-              { n: "01", t: "Describe", d: "Type what you want in plain English.", icon: "💬" },
-              { n: "02", t: "AI reads scene", d: "Animora analyzes every object, material, layer.", icon: "🔍" },
-              { n: "03", t: "AI executes", d: "Like an expert Blender artist — right tools, right techniques.", icon: "⚡" },
-              { n: "04", t: "Iterate", d: "'Make it darker', 'add wind', 'more detail'.", icon: "🔄" },
+              { n: "01", t: "Describe", d: "Type what you want in plain English.", icon: <IconMessage /> },
+              { n: "02", t: "AI reads scene", d: "Animora analyzes every object, material, layer.", icon: <IconEye /> },
+              { n: "03", t: "AI executes", d: "Like an expert Blender artist — right tools, right techniques.", icon: <IconZap /> },
+              { n: "04", t: "Iterate", d: "'Make it darker', 'add wind', 'more detail'.", icon: <IconRefresh /> },
             ].map((s, i) => (
               <Card3D key={i} index={i} className="card-elevated p-7 text-center group">
-                <span className="block text-3xl mb-3">{s.icon}</span>
+                <span className="block mb-3 text-primary/70 group-hover:text-primary transition-colors">{s.icon}</span>
                 <span className="block text-4xl font-display italic text-primary/25 mb-3">{s.n}</span>
                 <h3 className="heading-section text-sm text-foreground mb-2 group-hover:text-primary transition-colors">{s.t}</h3>
                 <p className="text-xs text-white/35 font-body">{s.d}</p>
@@ -154,45 +264,34 @@ const Index = () => {
         </div>
       </section>
 
-      {/* PRICING */}
-      <section className="py-24 px-6">
-        <div className="max-w-6xl mx-auto text-center">
+      {/* PRICING PREVIEW — Links to /pricing */}
+      <section className="py-24 px-6 ambient-glow noise-overlay">
+        <div className="max-w-[900px] mx-auto text-center relative z-10">
           <Reveal3D>
             <h2 className="heading-display text-4xl md:text-[56px] text-foreground italic">Simple pricing.</h2>
             <p className="mt-3 text-body text-lg">Try free. Upgrade when ready.</p>
+            <div className="grid md:grid-cols-3 gap-4 mt-12">
+              {[
+                { name: "Free", price: "$0", desc: "3-day trial" },
+                { name: "Creator", price: "$29", desc: "/month", featured: true },
+                { name: "Studio", price: "$99", desc: "/month" },
+              ].map((plan, i) => (
+                <Card3D key={i} index={i} className={`text-center p-8 rounded-2xl ${plan.featured ? "pricing-featured card-interactive" : "card-interactive"}`}>
+                  <h3 className="text-overline !text-muted-foreground/40">{plan.name}</h3>
+                  <div className="mt-3 flex items-baseline gap-1 justify-center">
+                    <span className="font-display text-4xl text-foreground italic">{plan.price}</span>
+                    <span className="text-sm text-white/30">{plan.desc}</span>
+                  </div>
+                </Card3D>
+              ))}
+            </div>
+            <div className="mt-10">
+              <Link to="/pricing" className="btn-primary text-sm px-8 py-3.5 inline-flex items-center gap-2">
+                View Full Pricing
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+              </Link>
+            </div>
           </Reveal3D>
-          <div className="flex items-center justify-center gap-3 mt-7">
-            <span className={`text-sm font-body ${!isAnnual ? "text-foreground" : "text-muted-foreground"}`}>Monthly</span>
-            <button onClick={() => setIsAnnual(!isAnnual)} className={`w-12 h-6 rounded-full p-0.5 transition-all ${isAnnual ? "bg-primary" : "bg-white/[0.08]"}`}>
-              <div className={`w-5 h-5 rounded-full bg-white transition-transform duration-300 ${isAnnual ? "translate-x-6" : ""}`} />
-            </button>
-            <span className={`text-sm font-body ${isAnnual ? "text-foreground" : "text-muted-foreground"}`}>Annual</span>
-            {isAnnual && <span className="text-xs px-2.5 py-1 rounded-full bg-primary/10 text-primary font-medium">Save 17%</span>}
-          </div>
-          <div className="grid md:grid-cols-3 gap-4 mt-12">
-            {[
-              { name: "Free", price: "$0", sub: "3-day trial", features: ["Full access 3 days", "10 AI operations", "All exports"], cta: "Start Free", hl: false },
-              { name: "Creator", price: isAnnual ? "$24" : "$29", sub: isAnnual ? "/mo annually" : "/month", badge: "Most Popular", features: ["1,000 AI credits/mo", "Full pipeline", "Commercial license", "Voice input"], cta: "Join Waitlist", hl: true },
-              { name: "Studio", price: isAnnual ? "$82" : "$99", sub: isAnnual ? "/mo annually" : "/month", features: ["Unlimited credits", "Team collab", "Asset library", "Priority support"], cta: "Join Waitlist", hl: false },
-            ].map((plan, i) => (
-              <Card3D key={i} index={i} className={`relative text-left p-8 rounded-2xl ${plan.hl ? "pricing-featured card-interactive" : "card-interactive"}`}>
-                {plan.badge && <span className="absolute -top-3 left-8 px-3 py-1 text-xs font-medium rounded-full bg-primary text-primary-foreground">{plan.badge}</span>}
-                <h3 className="text-overline !text-muted-foreground/40">{plan.name}</h3>
-                <div className="mt-3 flex items-baseline gap-1">
-                  <span className="font-display text-4xl text-foreground italic">{plan.price}</span>
-                  <span className="text-sm text-white/30">{plan.sub}</span>
-                </div>
-                <ul className="mt-6 space-y-3">
-                  {plan.features.map(f => (
-                    <li key={f} className="flex items-center gap-2.5 text-sm text-white/45 font-body">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="hsl(var(--primary))" strokeWidth="2.5" className="opacity-60"><polyline points="20 6 9 17 4 12" /></svg>{f}
-                    </li>
-                  ))}
-                </ul>
-                <a href="#waitlist" className={`mt-8 w-full h-12 flex items-center justify-center rounded-xl text-sm font-medium transition-transform hover:scale-[1.02] ${plan.hl ? "btn-primary" : "btn-secondary"}`}>{plan.cta}</a>
-              </Card3D>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -223,8 +322,29 @@ const Index = () => {
           <h3 className="mt-3 heading-section text-2xl text-foreground">Follow the build.</h3>
           <p className="mt-4 text-body max-w-[400px] mx-auto">Building from Nairobi, Kenya.</p>
           <div className="flex flex-wrap items-center justify-center gap-3 mt-8">
-            {[{ label: "Instagram", href: "https://www.instagram.com/animo_raai" }, { label: "TikTok", href: "https://www.tiktok.com/@animora.ai6" }, { label: "YouTube", href: "https://www.youtube.com/@Anim_ora_ai" }].map(s => (
-              <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" className="btn-secondary text-sm">{s.label}</a>
+            {[
+              { label: "Instagram", href: "https://www.instagram.com/animo_raai", icon: (
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                </svg>
+              )},
+              { label: "TikTok", href: "https://www.tiktok.com/@animora.ai6", icon: (
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V9.05a8.27 8.27 0 0 0 4.76 1.5V7.12a4.83 4.83 0 0 1-1-.43z" />
+                </svg>
+              )},
+              { label: "YouTube", href: "https://www.youtube.com/@animorabyEAT", icon: (
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                </svg>
+              )},
+            ].map(s => (
+              <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" className="btn-secondary text-sm inline-flex items-center gap-2">
+                {s.icon}
+                {s.label}
+              </a>
             ))}
           </div>
         </Reveal3D>

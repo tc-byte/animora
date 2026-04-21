@@ -1,7 +1,7 @@
 import { LegalPage, LegalSection } from "@/components/LegalPage";
 
 const PrivacyPage = () => (
-  <LegalPage title="Animora — Privacy Policy" lastUpdated="June 2025">
+  <LegalPage title="Privacy Policy" lastUpdated="April 2026">
     <LegalSection number="1" title="Introduction">
       <p>Animora is committed to your privacy. We comply with the Kenya Data Protection Act 2019 and GDPR for EU users.</p>
     </LegalSection>

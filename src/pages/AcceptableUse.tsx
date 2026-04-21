@@ -1,18 +1,18 @@
 import { LegalPage, LegalSection } from "@/components/LegalPage";
 
 const AcceptableUsePage = () => (
-  <LegalPage title="Animora — Acceptable Use Policy" lastUpdated="June 2025">
+  <LegalPage title="Acceptable Use Policy" lastUpdated="April 2026">
     <LegalSection title="Prohibited Activities">
       <p>The following are strictly prohibited when using Animora:</p>
-      <ul className="list-disc list-inside space-y-1 mt-2">
-        <li>Infringing intellectual property rights</li>
-        <li>Generating illegal or harmful content</li>
-        <li>Creating NSFW content</li>
-        <li>AI jailbreaking or prompt injection attacks</li>
-        <li>Credit system circumvention</li>
-        <li>Reverse engineering Animora software</li>
-        <li>Account sharing or reselling access</li>
-        <li>Harassment of other users</li>
+      <ul className="space-y-2.5 mt-3">
+        <li className="flex items-start gap-2.5"><span className="text-primary/40 mt-1 text-[8px]">●</span>Infringing intellectual property rights</li>
+        <li className="flex items-start gap-2.5"><span className="text-primary/40 mt-1 text-[8px]">●</span>Generating illegal or harmful content</li>
+        <li className="flex items-start gap-2.5"><span className="text-primary/40 mt-1 text-[8px]">●</span>Creating NSFW content</li>
+        <li className="flex items-start gap-2.5"><span className="text-primary/40 mt-1 text-[8px]">●</span>AI jailbreaking or prompt injection attacks</li>
+        <li className="flex items-start gap-2.5"><span className="text-primary/40 mt-1 text-[8px]">●</span>Credit system circumvention</li>
+        <li className="flex items-start gap-2.5"><span className="text-primary/40 mt-1 text-[8px]">●</span>Reverse engineering Animora software</li>
+        <li className="flex items-start gap-2.5"><span className="text-primary/40 mt-1 text-[8px]">●</span>Account sharing or reselling access</li>
+        <li className="flex items-start gap-2.5"><span className="text-primary/40 mt-1 text-[8px]">●</span>Harassment of other users</li>
       </ul>
     </LegalSection>
     <LegalSection title="Enforcement">

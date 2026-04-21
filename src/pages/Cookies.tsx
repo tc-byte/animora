@@ -1,7 +1,7 @@
 import { LegalPage, LegalSection } from "@/components/LegalPage";
 
 const CookiesPage = () => (
-  <LegalPage title="Animora — Cookie Policy" lastUpdated="June 2025">
+  <LegalPage title="Cookie Policy" lastUpdated="April 2026">
     <LegalSection title="Essential (always active)">
       <p><strong>session_id</strong> — Login state, session duration.<br /><strong>csrf_token</strong> — Security, session duration.</p>
     </LegalSection>
