@@ -16,7 +16,7 @@ export const Navbar = () => {
   const location = useLocation();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60);
+    const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -25,71 +25,94 @@ export const Navbar = () => {
 
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 h-16">
-        {/* Logo - left */}
-        <Link to="/" className="hover:opacity-80 transition-opacity relative z-10">
-          <AnimoraLogo />
-        </Link>
-
-        {/* Center floating glass pill nav */}
+      <nav
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+          scrolled ? "py-2" : "py-3"
+        }`}
+      >
         <div
-          className={`hidden md:flex items-center gap-1 px-1.5 py-1.5 rounded-full transition-all duration-500 ${
-            scrolled ? "glass-nav shadow-lg shadow-black/20" : "glass-nav"
+          className={`mx-auto max-w-[1100px] px-5 md:px-6 flex items-center justify-between h-14 rounded-2xl transition-all duration-500 ${
+            scrolled
+              ? "nav-container shadow-lg shadow-black/30 mx-4 md:mx-auto"
+              : "nav-always-visible rounded-2xl mx-4 md:mx-auto"
           }`}
         >
-          {navLinks.map((l) => (
-            <Link
-              key={l.to}
-              to={l.to}
-              className={`px-4 py-1.5 rounded-full text-[13px] transition-all duration-200 ${
-                location.pathname === l.to
-                  ? "bg-white/10 text-foreground font-medium"
-                  : "text-muted-foreground hover:text-foreground hover:bg-white/[0.04]"
-              }`}
-            >
-              {l.label}
-            </Link>
-          ))}
-        </div>
-
-        {/* Right - CTA */}
-        <div className="flex items-center gap-4 relative z-10">
-          <Link
-            to="/#waitlist"
-            className="hidden md:inline-flex items-center gap-1.5 px-5 py-2 text-[13px] font-medium rounded-full glass-strong text-foreground hover:bg-white/[0.08] transition-all duration-300"
-          >
-            Get Started
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M7 17L17 7M17 7H7M17 7v10" />
-            </svg>
+          {/* Logo */}
+          <Link to="/" className="hover:opacity-80 transition-opacity relative z-10">
+            <AnimoraLogo size={24} />
           </Link>
-          <button
-            onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden text-foreground p-1"
-            aria-label="Toggle menu"
-          >
-            {mobileOpen ? <X size={22} /> : <Menu size={22} />}
-          </button>
+
+          {/* Center nav links */}
+          <div className="hidden md:flex items-center gap-0.5 rounded-xl p-1">
+            {navLinks.map((l) => (
+              <Link
+                key={l.to}
+                to={l.to}
+                className={`px-4 py-2 rounded-lg text-[13px] font-medium transition-all duration-300 ${
+                  location.pathname === l.to
+                    ? "text-foreground bg-white/[0.08]"
+                    : "text-white/50 hover:text-white/80 hover:bg-white/[0.04]"
+                }`}
+              >
+                {l.label}
+              </Link>
+            ))}
+          </div>
+
+          {/* Right CTA */}
+          <div className="flex items-center gap-3 relative z-10">
+            <a
+              href="/#waitlist"
+              className="hidden md:inline-flex items-center gap-2 px-5 py-2 text-[13px] font-medium rounded-xl bg-primary text-primary-foreground hover:brightness-110 transition-all duration-300 hover:shadow-lg hover:shadow-primary/25 hover:-translate-y-0.5"
+            >
+              Get Early Access
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M7 17L17 7M17 7H7M17 7v10" />
+              </svg>
+            </a>
+            <button
+              onClick={() => setMobileOpen(!mobileOpen)}
+              className="md:hidden text-foreground p-1.5 rounded-lg hover:bg-white/[0.05] transition-colors"
+              aria-label="Toggle menu"
+            >
+              {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          </div>
         </div>
       </nav>
 
+      {/* Mobile menu */}
       {mobileOpen && (
-        <div className="fixed inset-0 z-40 bg-background/98 backdrop-blur-xl flex flex-col items-center justify-center gap-8 animate-fade-in">
-          {navLinks.map((l) => (
+        <div className="fixed inset-0 z-40 bg-background/98 backdrop-blur-2xl flex flex-col items-center justify-center gap-8 animate-fade-in">
+          {navLinks.map((l, i) => (
             <Link
               key={l.to}
               to={l.to}
-              className="text-2xl font-serif text-foreground hover:text-primary transition-colors"
+              className={`text-2xl font-display transition-all duration-300 ${
+                location.pathname === l.to
+                  ? "text-foreground"
+                  : "text-white/40 hover:text-foreground"
+              }`}
+              style={{ animationDelay: `${i * 0.05}s` }}
             >
               {l.label}
             </Link>
           ))}
-          <Link
-            to="/#waitlist"
-            className="mt-4 px-8 py-3 text-base font-medium rounded-full glass-strong text-foreground hover:bg-white/[0.08] transition-all"
+          <a
+            href="/#waitlist"
+            className="mt-4 px-8 py-3 text-sm font-medium rounded-xl bg-primary text-primary-foreground shadow-lg shadow-primary/25"
           >
-            Get Started
-          </Link>
+            Get Early Access
+          </a>
         </div>
       )}
     </>

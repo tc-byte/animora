@@ -14,7 +14,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['Plus Jakarta Sans', 'sans-serif'],
+        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
+        display: ['Instrument Serif', 'Georgia', 'Times New Roman', 'serif'],
+        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -25,7 +27,6 @@ export default {
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
-          hover: "#6D28D9",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
@@ -51,14 +52,6 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        sky: {
-          DEFAULT: "hsl(var(--sky))",
-        },
-        surface: {
-          DEFAULT: "hsl(var(--surface))",
-          alt: "hsl(var(--surface-alt))",
-        },
-        "purple-light": "hsl(var(--purple-light))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -68,6 +61,23 @@ export default {
           "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
+        },
+        warm: {
+          50: "hsl(var(--warm-50))",
+          100: "hsl(var(--warm-100))",
+          200: "hsl(var(--warm-200))",
+          300: "hsl(var(--warm-300))",
+          400: "hsl(var(--warm-400))",
+          500: "hsl(var(--warm-500))",
+          600: "hsl(var(--warm-600))",
+          700: "hsl(var(--warm-700))",
+          800: "hsl(var(--warm-800))",
+          900: "hsl(var(--warm-900))",
+        },
+        purple: {
+          DEFAULT: "hsl(var(--purple))",
+          light: "hsl(var(--purple-light))",
+          dark: "hsl(var(--purple-dark))",
         },
       },
       borderRadius: {
@@ -85,19 +95,29 @@ export default {
           to: { height: "0", opacity: "0" },
         },
         "fade-in": {
-          "0%": { opacity: "0", transform: "translateY(10px)" },
+          "0%": { opacity: "0", transform: "translateY(8px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
-        "pulse-dot": {
-          "0%, 100%": { opacity: "0.4" },
-          "50%": { opacity: "1" },
+        "fade-in-up": {
+          "0%": { opacity: "0", transform: "translateY(20px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        "scale-in": {
+          "0%": { opacity: "0", transform: "scale(0.95)" },
+          "100%": { opacity: "1", transform: "scale(1)" },
+        },
+        "slide-up": {
+          "0%": { opacity: "0", transform: "translateY(100%)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "fade-in": "fade-in 0.5s ease-out forwards",
-        "pulse-dot": "pulse-dot 1.5s ease-in-out infinite",
+        "fade-in": "fade-in 0.4s ease-out forwards",
+        "fade-in-up": "fade-in-up 0.6s ease-out forwards",
+        "scale-in": "scale-in 0.3s ease-out forwards",
+        "slide-up": "slide-up 0.5s ease-out forwards",
       },
     },
   },

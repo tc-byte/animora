@@ -1,125 +1,58 @@
-import { motion } from "framer-motion";
 import { WaitlistForm } from "@/components/WaitlistForm";
+import { Reveal3D, Card3D } from "@/components/ScrollAnimations";
 import { useState } from "react";
 
-const fadeUp = {
-  initial: { opacity: 0, y: 20 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true },
-  transition: { duration: 0.6 },
-};
-
 const plans = [
-  {
-    name: "Free", price: { monthly: "$0", annual: "$0" }, sub: "3-day free trial. No card required.",
-    features: { "AI credits/month": "10", "Trial period": "3 days", "Commercial license": false, "Modeling & sculpting": true, "Rigging & animation": true, "Simulation & VFX": true, "Materials pipeline": true, "Lighting & render config": true, "Game export pipeline": true, "Voice input": false, "Priority processing": false, "Team collaboration": false, "Asset library": false, "Custom style memory": false, "Support": "Community" },
-    cta: "Start Free", highlight: false,
-  },
-  {
-    name: "Creator", price: { monthly: "$29", annual: "$24" }, sub: "For individual creators.",
-    badge: "Most Popular",
-    features: { "AI credits/month": "1,000", "Trial period": "3 days", "Commercial license": true, "Modeling & sculpting": true, "Rigging & animation": true, "Simulation & VFX": true, "Materials pipeline": true, "Lighting & render config": true, "Game export pipeline": true, "Voice input": true, "Priority processing": true, "Team collaboration": false, "Asset library": false, "Custom style memory": false, "Support": "Email" },
-    cta: "Join Waitlist", highlight: true,
-  },
-  {
-    name: "Studio", price: { monthly: "$99", annual: "$82" }, sub: "For power users and teams.",
-    features: { "AI credits/month": "Unlimited", "Trial period": "3 days", "Commercial license": true, "Modeling & sculpting": true, "Rigging & animation": true, "Simulation & VFX": true, "Materials pipeline": true, "Lighting & render config": true, "Game export pipeline": true, "Voice input": true, "Priority processing": true, "Team collaboration": true, "Asset library": true, "Custom style memory": true, "Support": "Priority" },
-    cta: "Join Waitlist", highlight: false,
-  },
+  { name: "Free", pm: "$0", pa: "$0", sub: "3-day trial. No card.", features: ["Full access 3 days", "10 AI operations", "All exports"], cta: "Start Free", hl: false },
+  { name: "Creator", pm: "$29", pa: "$24", sub: "For creators.", badge: "Most Popular", features: ["1,000 AI credits/mo", "Full pipeline", "Commercial license", "Voice input", "Priority processing"], cta: "Join Waitlist", hl: true },
+  { name: "Studio", pm: "$99", pa: "$82", sub: "For teams.", features: ["Unlimited credits", "Team collab", "Asset library", "Style memory", "Priority support"], cta: "Join Waitlist", hl: false },
 ];
 
-const featureRows = Object.keys(plans[0].features);
-
 const PricingPage = () => {
-  const [isAnnual, setIsAnnual] = useState(false);
-
+  const [annual, setAnnual] = useState(false);
   return (
-    <div className="min-h-screen bg-background pt-24">
-      <section className="py-20 px-6 text-center">
-        <motion.h1 {...fadeUp} className="text-4xl md:text-[56px] font-light text-foreground tracking-[-0.04em]">
-          Pricing
-        </motion.h1>
-        <motion.p {...fadeUp} className="mt-4 text-lg text-muted-foreground">
-          Try Animora free. No card required.
-        </motion.p>
-
-        <div className="flex items-center justify-center gap-3 mt-8">
-          <span className={`text-sm ${!isAnnual ? "text-foreground" : "text-muted-foreground"}`}>Monthly</span>
-          <button onClick={() => setIsAnnual(!isAnnual)} className={`w-12 h-6 rounded-full p-0.5 transition-colors ${isAnnual ? "bg-primary" : "bg-border"}`}>
-            <div className={`w-5 h-5 rounded-full bg-white shadow transition-transform ${isAnnual ? "translate-x-6" : ""}`} />
+    <div className="min-h-screen bg-[#0a0a0f]">
+      <section className="pt-32 pb-16 px-6 text-center ambient-glow noise-overlay">
+        <Reveal3D>
+          <h1 className="heading-display text-4xl md:text-[72px] text-foreground italic">Pricing</h1>
+          <p className="mt-4 text-lg text-white/50 font-body">Try free. No card required.</p>
+        </Reveal3D>
+        <div className="flex items-center justify-center gap-3 mt-8 relative z-10">
+          <span className={`text-sm font-body ${!annual ? "text-foreground" : "text-muted-foreground"}`}>Monthly</span>
+          <button onClick={() => setAnnual(!annual)} className={`w-12 h-6 rounded-full p-0.5 transition-all ${annual ? "bg-primary" : "bg-white/[0.08]"}`}>
+            <div className={`w-5 h-5 rounded-full bg-white transition-transform duration-300 ${annual ? "translate-x-6" : ""}`} />
           </button>
-          <span className={`text-sm ${isAnnual ? "text-foreground" : "text-muted-foreground"}`}>Annual</span>
-          {isAnnual && <span className="text-xs px-2 py-0.5 rounded-full bg-purple-light text-primary">Save 17%</span>}
+          <span className={`text-sm font-body ${annual ? "text-foreground" : "text-muted-foreground"}`}>Annual</span>
+          {annual && <span className="text-xs px-2.5 py-1 rounded-full bg-primary/10 text-primary font-medium">Save 17%</span>}
         </div>
       </section>
 
-      <section className="px-6 pb-16">
-        <div className="max-w-5xl mx-auto grid md:grid-cols-3 gap-6">
-          {plans.map((plan, i) => (
-            <motion.div key={i} {...fadeUp} transition={{ delay: i * 0.1 }}
-              className={`relative text-left p-8 rounded-2xl border ${plan.highlight ? "border-primary shadow-lg shadow-primary/10" : "border-border"} bg-card`}
-            >
-              {plan.badge && (
-                <span className="absolute -top-3 left-8 px-3 py-1 text-xs font-medium rounded-full bg-primary text-primary-foreground">
-                  {plan.badge}
-                </span>
-              )}
-              <h3 className="text-sm uppercase tracking-wider text-muted-foreground font-semibold">{plan.name}</h3>
+      <section className="px-6 pb-24">
+        <div className="max-w-5xl mx-auto grid md:grid-cols-3 gap-4">
+          {plans.map((p, i) => (
+            <Card3D key={i} index={i} className={`relative text-left p-8 rounded-2xl ${p.hl ? "pricing-featured card-interactive" : "card-interactive"}`}>
+              {p.badge && <span className="absolute -top-3 left-8 px-3 py-1 text-xs font-medium rounded-full bg-primary text-primary-foreground">{p.badge}</span>}
+              <h3 className="text-overline !text-muted-foreground/40">{p.name}</h3>
               <div className="mt-2 flex items-baseline gap-1">
-                <span className="text-4xl font-light text-foreground">{isAnnual ? plan.price.annual : plan.price.monthly}</span>
-                <span className="text-sm text-muted-foreground">{plan.name === "Free" ? "" : isAnnual ? "/mo billed annually" : "/month"}</span>
+                <span className="font-display text-4xl text-foreground italic">{annual ? p.pa : p.pm}</span>
+                <span className="text-sm text-white/25">{p.name === "Free" ? "" : annual ? "/mo annually" : "/month"}</span>
               </div>
-              <p className="mt-2 text-sm text-muted-foreground">{plan.sub}</p>
-              <a href="#waitlist-pricing" className={`mt-8 w-full h-10 flex items-center justify-center rounded-lg text-sm font-medium transition-colors ${
-                plan.highlight ? "bg-primary text-primary-foreground hover:bg-primary-hover" : "border border-primary text-primary hover:bg-purple-light"
-              }`}>
-                {plan.cta}
-              </a>
-            </motion.div>
+              <p className="mt-2 text-sm text-white/35 font-body">{p.sub}</p>
+              <ul className="mt-6 space-y-3">
+                {p.features.map(f => <li key={f} className="flex items-center gap-2.5 text-sm text-white/40 font-body"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="hsl(var(--primary))" strokeWidth="2.5" className="opacity-50"><polyline points="20 6 9 17 4 12" /></svg>{f}</li>)}
+              </ul>
+              <a href="#waitlist-pricing" className={`mt-8 w-full h-12 flex items-center justify-center rounded-xl text-sm font-medium transition-transform hover:scale-[1.02] ${p.hl ? "btn-primary" : "btn-secondary"}`}>{p.cta}</a>
+            </Card3D>
           ))}
         </div>
       </section>
 
-      <section className="px-6 pb-32">
-        <div className="max-w-5xl mx-auto overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-border">
-                <th className="text-left py-4 text-muted-foreground font-normal">Feature</th>
-                {plans.map((p) => (
-                  <th key={p.name} className="text-center py-4 text-foreground font-medium">{p.name}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {featureRows.map((row) => (
-                <tr key={row} className="border-b border-border/50">
-                  <td className="py-3 text-muted-foreground">{row}</td>
-                  {plans.map((p) => {
-                    const val = p.features[row as keyof typeof p.features];
-                    return (
-                      <td key={p.name} className="text-center py-3">
-                        {typeof val === "boolean" ? (
-                          val ? <span className="text-primary">✓</span> : <span className="text-muted-foreground/30">—</span>
-                        ) : (
-                          <span className="text-foreground text-xs">{val}</span>
-                        )}
-                      </td>
-                    );
-                  })}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <section id="waitlist-pricing" className="py-32 px-6 gradient-cta">
-        <div className="max-w-md mx-auto text-center">
-          <h2 className="text-4xl font-light text-foreground tracking-[-0.03em]">Start creating with Animora.</h2>
-          <p className="mt-4 text-muted-foreground">Join the waitlist. Get 7 days free when we launch.</p>
+      <section id="waitlist-pricing" className="py-24 px-6 ambient-glow noise-overlay">
+        <Reveal3D className="max-w-md mx-auto text-center relative z-10">
+          <h2 className="heading-display text-4xl text-foreground italic">Start creating.</h2>
+          <p className="mt-4 text-white/40 font-body">7 days free at launch.</p>
           <WaitlistForm source="pricing_page" className="mt-10" />
-        </div>
+        </Reveal3D>
       </section>
     </div>
   );

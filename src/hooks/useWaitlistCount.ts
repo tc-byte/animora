@@ -5,20 +5,42 @@ export const useWaitlistCount = () => {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
+    let mounted = true;
+
     const fetchCount = async () => {
-      const { data } = await supabase.from("waitlist_count").select("total").maybeSingle();
-      if (data?.total != null) setCount(Number(data.total));
+      try {
+        const { data, error } = await supabase
+          .from("waitlist_count")
+          .select("total")
+          .maybeSingle();
+        if (error) {
+          console.warn("Failed to fetch waitlist count:", error.message);
+          return;
+        }
+        if (mounted && data?.total != null) {
+          setCount(Number(data.total));
+        }
+      } catch (err) {
+        console.warn("Waitlist count fetch error:", err);
+      }
     };
     fetchCount();
 
     const channel = supabase
       .channel("waitlist-changes")
-      .on("postgres_changes", { event: "INSERT", schema: "public", table: "waitlist" }, () => {
-        fetchCount();
-      })
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "waitlist" },
+        () => {
+          fetchCount();
+        }
+      )
       .subscribe();
 
-    return () => { supabase.removeChannel(channel); };
+    return () => {
+      mounted = false;
+      supabase.removeChannel(channel);
+    };
   }, []);
 
   return count;
